@@ -35,6 +35,19 @@ html, body {
     font-size: 20px;
 }
 
+.btn_save
+{
+    position: fixed;
+    z-index: 10;
+    bottom: 30px;
+    left: 30px;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .textarea{
     max-width: 200px;
     background-color: #dddddd;
