@@ -1,15 +1,22 @@
 const $area = document.querySelector('.area');
 const $addBtn = document.querySelector('.btn');
+const $saveBtn = document.querySelector('.btn_save');
+
 
 let action = false;
 let $selectedBox = null;
 let selectedBoxIndex = null;
+let $selectedText = null;
+let selectedTextIndex = null;
 let boxes = [];
 
 const areaWidth = $area.offsetWidth;
 const areaHeight = $area.offsetHeight;
 let boxWidth = 0;
 let boxHeight = 0;
+
+// let text = document.getElementById('text');
+// let t = localStorage.getItem('text');
 
 let startCoords = {
     x: 0,
@@ -35,7 +42,7 @@ function getLS(key) {
 function boxGenerator(list) {
     let template = '';
     for (let i = 0; i < list.length; i++) {
-        template += '<div class="box" style="left: ' + list[i].x + 'px; top: ' + list[i].y + 'px;" data-index="' + i + '"><textarea class="textarea" placeholder="Enter a message..."></textarea></div>';
+        template += '<div class="box" style="left: ' + list[i].x + 'px; top: ' + list[i].y + 'px;" data-index="' + i + '"><textarea rows="10" cols="24" class="textarea" placeholder="Enter a message..." id="text' + i + '" data-index="' + i + '">'+list[i].text+'</textarea></div>';
     }
     $area.innerHTML = template;
     boxWidth = document.querySelector('.box').offsetWidth;
@@ -79,7 +86,33 @@ $area.addEventListener('mousemove', function (e) {
 $addBtn.addEventListener('click', function () {
     boxes.push({
         x: 0,
-        y: 0
+        y: 0,
+        text: ''
     });
     boxGenerator(boxes);
 });
+
+
+$area.addEventListener('click', function (e) {
+    if (e.target.classList.contains('textarea')) {
+        $selectedBox = e.target;
+        selectedBoxIndex = e.target.getAttribute('data-index');
+    }
+});
+
+$saveBtn.addEventListener('click', function (){
+    $saveText = document.getElementById('text'+selectedBoxIndex);
+    boxes[selectedBoxIndex].text = $saveText.value;
+    setLS('coords', boxes);
+});
+
+
+// if(t)
+// {
+//     text.value = t;
+// }
+
+// save.onclick = function ()
+// {
+//     localStorage.setItem('text', text.value);
+// }
